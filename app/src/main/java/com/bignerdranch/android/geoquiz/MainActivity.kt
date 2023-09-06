@@ -1,10 +1,13 @@
 package com.bignerdranch.android.geoquiz
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -88,11 +91,35 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onDestroy() called")
     }
 
-        private fun updateQuestion() {
+    private fun updateQuestion() {
         val questionTextResId = quizViewModel.currentQuestionText
         binding.questionTextView.setText(questionTextResId)
+        if (quizViewModel.currentQuestionAnswered)
+            greyButtons()
+        else
+            normalButtons()
     }
 
+    @SuppressLint("ResourceAsColor")
+    private fun greyButtons() {
+        binding.trueButton.isEnabled = false
+        binding.falseButton.isEnabled = false
+        binding.cheatButton.isEnabled = false
+        binding.trueButton.setBackgroundColor(getColor(R.color.material_dynamic_neutral60))
+        binding.falseButton.setBackgroundColor(getColor(R.color.material_dynamic_neutral60))
+        binding.cheatButton.setBackgroundColor(getColor(R.color.material_dynamic_neutral60))
+    }
+
+    private fun normalButtons() {
+        binding.trueButton.isEnabled = true
+        binding.falseButton.isEnabled = true
+        binding.cheatButton.isEnabled = true
+        binding.trueButton.setBackgroundColor(getColor(R.color.design_default_color_primary))
+        binding.falseButton.setBackgroundColor(getColor(R.color.design_default_color_primary))
+        binding.cheatButton.setBackgroundColor(getColor(R.color.design_default_color_primary))
+    }
+
+    @SuppressLint("ResourceAsColor")
     private fun checkQuestion(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
 
@@ -107,5 +134,8 @@ class MainActivity : AppCompatActivity() {
             messageResId,
             Toast.LENGTH_SHORT
         ).show()
+
+        quizViewModel.questionAnswered()
+        greyButtons()
     }
 }

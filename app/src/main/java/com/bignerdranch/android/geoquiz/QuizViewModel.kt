@@ -7,15 +7,17 @@ import androidx.lifecycle.ViewModel
 private const val TAG = "QuizViewModel"
 const val CURRENT_INDEX_KEY = "CURRENT_INDEX_KEY"
 const val IS_CHEATER_KEY = "IS_CHEATER_KEY"
+const val ALREADY_ANSWERED_KEY = "ALREADY_ANSWERED_KEY"
 class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     //List of questions
     private val questionBank = listOf(
-        Question(R.string.question_australia, true),
-        Question(R.string.question_oceans, true),
-        Question(R.string.question_mideast, false),
-        Question(R.string.question_africa, false),
-        Question(R.string.question_americas, true),
-        Question(R.string.question_asia, true))
+        Question(R.string.question_australia, true, false),
+        Question(R.string.question_oceans, true, false),
+        Question(R.string.question_mideast, false, false),
+        Question(R.string.question_africa, false, false),
+        Question(R.string.question_americas, true, false),
+        Question(R.string.question_asia, true, false)
+    )
 
     var isCheater: Boolean
         get() = savedStateHandle.get(IS_CHEATER_KEY) ?: false
@@ -27,6 +29,12 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
         get() = questionBank[currentIndex].answer
     val currentQuestionText: Int
         get() = questionBank[currentIndex].textResId
+    fun questionAnswered() {
+        questionBank[currentIndex].answered = true
+    }
+
+    val currentQuestionAnswered: Boolean
+        get() = questionBank[currentIndex].answered
     fun moveToNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
     }
