@@ -12,12 +12,13 @@ const val QUESTIONS_CORRECT_KEY = "QUESTIONS_CORRECT_KEY"
 class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     //List of questions
     private val questionBank = listOf(
-        Question(R.string.question_australia, true, false),
-        Question(R.string.question_oceans, true, false),
-        Question(R.string.question_mideast, false, false),
-        Question(R.string.question_africa, false, false),
-        Question(R.string.question_americas, true, false),
-        Question(R.string.question_asia, true, false)
+        Question(R.string.question_1,false),
+        Question(R.string.question_2,false),
+        Question(R.string.question_3, true),
+        Question(R.string.question_4, true),
+        Question(R.string.question_5, true),
+        Question(R.string.question_6, true),
+        Question(R.string.question_7, true),
     )
 
     var isCheater: Boolean

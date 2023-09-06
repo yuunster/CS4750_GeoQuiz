@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(
                 this,
                 "Your score is: " + quizViewModel.questionsCorrect + "/" + quizViewModel.numQuestions,
-                Toast.LENGTH_SHORT
+                Toast.LENGTH_LONG
             ).show()
         }
     }
