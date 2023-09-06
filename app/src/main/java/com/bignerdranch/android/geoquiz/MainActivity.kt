@@ -100,7 +100,6 @@ class MainActivity : AppCompatActivity() {
             normalButtons()
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun greyButtons() {
         binding.trueButton.isEnabled = false
         binding.falseButton.isEnabled = false
@@ -119,7 +118,6 @@ class MainActivity : AppCompatActivity() {
         binding.cheatButton.setBackgroundColor(getColor(R.color.design_default_color_primary))
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun checkQuestion(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
 
@@ -129,6 +127,9 @@ class MainActivity : AppCompatActivity() {
             else -> R.string.incorrect_toast
         }
 
+        if (userAnswer == correctAnswer)
+            quizViewModel.incrementQuestionsCorrect()
+
         Toast.makeText(
             this,
             messageResId,
@@ -137,5 +138,13 @@ class MainActivity : AppCompatActivity() {
 
         quizViewModel.questionAnswered()
         greyButtons()
+        quizViewModel.incrementAnswers()
+        if (quizViewModel.questionsAnswered == quizViewModel.numQuestions) {
+            Toast.makeText(
+                this,
+                "Your score is: " + quizViewModel.questionsCorrect + "/" + quizViewModel.numQuestions,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
